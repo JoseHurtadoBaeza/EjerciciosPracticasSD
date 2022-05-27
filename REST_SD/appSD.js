@@ -94,6 +94,18 @@ appSD.put("/usuarios/:id", (request, response) => {
     });
 });
 
+// Borrar un usuario
+appSD.delete("/usuarios/:id", (request, response) => {
+    console.log("Borrar usuario");
+
+    const {id} = request.params;
+    sql = `DELETE FROM Usuarios WHERE idUsuario = ${id}`;
+    connection.query(sql, error => {
+        if (error) throw error;
+        response.send("Usuario borrado");
+    });
+});
+
 // Ejecutar la aplicación / Arrancar el servidor
 appSD.listen(port, () => {
     console.log(`Ejecutando la aplicación API REST de SD en el puerto ${port}`);
