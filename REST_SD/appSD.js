@@ -9,6 +9,8 @@ const port = 3000;
 // Se crea instancia de express
 const appSD = express();
 
+appSD.use(bodyParser.json());
+
 // Configuración de la conexión a la base de datos MySQL
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -58,6 +60,23 @@ appSD.get("/usuarios/:id", (request, response) => {
             response.send('No hay resultados');
         }
     });
+});
+
+// Añadir un nuevo usuario
+appSD.post("/usuarios", (request, response) => {
+    console.log('Añadir nuevo usuario');
+    const sql = 'INSERT INTO Usuarios SET ?';
+
+        const usuarioObj = {
+            nombre: request.body.nombre,
+            ciudad: request.body.ciudad,
+            correo: request.body.correo
+        }
+        
+        connection.query(sql, usuarioObj, error => {
+            if (error) throw error;
+            response.send('Usuario creado');
+        });
 });
 
 // Ejecutar la aplicación / Arrancar el servidor
