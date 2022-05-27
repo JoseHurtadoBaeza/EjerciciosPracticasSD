@@ -29,6 +29,21 @@ appSD.get("/", (req, res) => {
     res.json({message:'Página de inicio de aplicación de ejemplo de SD'})
 });
 
+// Listado de todos los usuarios
+appSD.get("/usuarios", (request, response) => {
+    console.log('Listado de todos los usuarios');
+
+    const sql = 'SELECT * FROM Usuarios';
+    connection.query(sql, (error, resultado) => {
+        if (error) throw error;
+        if (resultado.length > 0){
+            response.json(resultado);
+        } else {
+            response.send('No hay resultados');
+        }
+    });
+});
+
 // Ejecutar la aplicación / Arrancar el servidor
 appSD.listen(port, () => {
     console.log(`Ejecutando la aplicación API REST de SD en el puerto ${port}`);
