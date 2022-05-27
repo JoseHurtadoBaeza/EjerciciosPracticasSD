@@ -2,6 +2,7 @@
 const express = require("express");
 const mysql = require ("mysql");
 const bodyParser = require("body-parser");
+const fs = require("fs"); // Para el caso de uso con fichero JSON
 
 // Se define el puerto
 const port = 3000;
@@ -105,6 +106,20 @@ appSD.delete("/usuarios/:id", (request, response) => {
         response.send("Usuario borrado");
     });
 });
+
+
+// Leer fichero JSON y obtener el listado de todos los usuarios
+appSD.get("/usuarios_json", (request, response) => {
+    console.log("Leer datos de fichero en formato JSON");
+
+    try{
+        const datos = fs.readFileSync("usuarios.json", "utf8");
+        response.send(JSON.parse(datos));
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 // Ejecutar la aplicación / Arrancar el servidor
 appSD.listen(port, () => {
