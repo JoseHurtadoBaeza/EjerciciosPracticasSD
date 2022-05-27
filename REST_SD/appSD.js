@@ -79,6 +79,21 @@ appSD.post("/usuarios", (request, response) => {
         });
 });
 
+// Modificar un usuario
+appSD.put("/usuarios/:id", (request, response) => {
+    console.log("Modificar usuario");
+
+    const {id} = request.params;
+    const {nombre, ciudad, correo} = request.body;
+    const sql = `UPDATE Usuarios 
+    SET nombre = '${nombre}', ciudad = '${ciudad}', correo = '${correo}'
+    WHERE idUsuario = '${id}'`;
+    connection.query(sql, error => {
+        if (error) throw error;
+        response.send('Usuario modificado');
+    });
+});
+
 // Ejecutar la aplicación / Arrancar el servidor
 appSD.listen(port, () => {
     console.log(`Ejecutando la aplicación API REST de SD en el puerto ${port}`);
