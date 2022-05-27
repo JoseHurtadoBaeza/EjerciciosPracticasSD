@@ -44,6 +44,22 @@ appSD.get("/usuarios", (request, response) => {
     });
 });
 
+// Obtener los datos de un usuario
+appSD.get("/usuarios/:id", (request, response) => {
+    console.log('Obtener datos de un usuario');
+
+    const {id} = request.params;
+    const sql = `SELECT * FROM Usuarios WHERE idUsuario = ${id}`;
+    connection.query(sql, (error, resultado) => {
+        if (error) throw error;
+        if (resultado.length > 0){
+            response.json(resultado);
+        } else {
+            response.send('No hay resultados');
+        }
+    });
+});
+
 // Ejecutar la aplicación / Arrancar el servidor
 appSD.listen(port, () => {
     console.log(`Ejecutando la aplicación API REST de SD en el puerto ${port}`);
