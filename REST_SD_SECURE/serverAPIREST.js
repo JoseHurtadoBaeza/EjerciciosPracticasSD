@@ -45,7 +45,6 @@ mrouter.map(function () {
     this.put(/^param1\/([A-Za-z0-9_]+)\/param2+\/([A-Za-z0-9_]+)\/param3+\/([A-Za-z0-9_]+)$/).bind(function (req, res, param1, param2, param3,data) {
         res.send('PUT '+param1+ ' p1: '+param2 + ' p2: '+ param3);
     });
-    
 
     /** POST request con varios parámetros codificados mediante expresiones regulares.
      *  https://localhost:8080/param1/id1/param2/hola/param3/mundo
